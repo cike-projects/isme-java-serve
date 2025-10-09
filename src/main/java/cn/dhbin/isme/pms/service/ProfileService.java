@@ -1,21 +1,35 @@
 package cn.dhbin.isme.pms.service;
 
-import cn.dhbin.isme.pms.domain.entity.Profile;
-import com.baomidou.mybatisplus.extension.service.IService;
+import cn.dhbin.isme.repository.sherry.ProfileRepository;
+import cn.dhbin.isme.repository.sherry.entity.Profile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * ProfileService
  *
  * @author dhb
  */
-public interface ProfileService extends IService<Profile> {
+@Service
+public class ProfileService {
 
-    /**
-     * 通过用户id获取用户信息
-     *
-     * @param userId 用户id
-     * @return 用户信息
-     */
-    Profile findByUserId(Long userId);
+  @Autowired
+  private ProfileRepository profileRepository;
 
+
+  public Profile findByUserId(int userId) {
+    return profileRepository.findByUserId(userId);
+  }
+
+  public void updateById(Profile profile) {
+    profileRepository.updateById(profile);
+  }
+
+  public void save(Profile profile) {
+    profileRepository.save(profile);
+  }
+
+  public void removeByUserId(int id) {
+    profileRepository.removeByUserId(id);
+  }
 }

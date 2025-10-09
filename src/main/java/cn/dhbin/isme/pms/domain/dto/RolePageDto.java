@@ -2,6 +2,7 @@ package cn.dhbin.isme.pms.domain.dto;
 
 import java.util.List;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 角色Dto
@@ -9,9 +10,10 @@ import lombok.Data;
  * @author dhb
  */
 @Data
+@Accessors(chain = true)
 public class RolePageDto {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
@@ -19,6 +21,6 @@ public class RolePageDto {
 
     private Boolean enable;
 
-    private List<Long> permissionIds;
+    private List<Integer> permissionIds;
 
 }

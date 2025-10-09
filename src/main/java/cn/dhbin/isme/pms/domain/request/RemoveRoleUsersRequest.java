@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class RemoveRoleUsersRequest {
 
-    private List<Long> userIds;
+    private List<Integer> userIds;
 
 }

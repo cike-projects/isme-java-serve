@@ -1,26 +1,22 @@
 package cn.dhbin.isme.pms.domain.request;
 
-import cn.dhbin.mapstruct.helper.core.Convert;
-import jakarta.validation.constraints.NotBlank;
+
+import cn.dhbin.isme.repository.sherry.entity.Permission;
 import lombok.Data;
 
 /**
  * 更新权限
  */
 @Data
-public class UpdatePermissionRequest implements Convert {
+public class UpdatePermissionRequest {
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String code;
 
-    @NotBlank
     private String type;
 
-
-    private Long parentId;
+    private Integer parentId;
 
     private String path;
 
@@ -43,4 +39,25 @@ public class UpdatePermissionRequest implements Convert {
     private Boolean enable;
 
     private Integer order;
+
+    public Permission convert() {
+      Permission permission = new Permission();
+      permission.setName(name);
+      permission.setCode(code);
+      permission.setType(type);
+      permission.setParentid(parentId);
+      permission.setPath(path);
+      permission.setRedirect(redirect);
+      permission.setIcon(icon);
+      permission.setComponent(component);
+      permission.setLayout(layout);
+      permission.setKeepalive(keepAlive ? (byte) 1 : (byte) 0);
+      permission.setMethod(method);
+      permission.setDescription(description);
+      permission.setShow(show ? (byte) 1 : (byte) 0);
+      permission.setEnable(enable ? (byte) 1 : (byte) 0);
+      permission.setOrder(order);
+      return permission;
+    }
+
 }

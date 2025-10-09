@@ -1,6 +1,7 @@
 package cn.dhbin.isme.pms.domain.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 用户信息
@@ -8,9 +9,10 @@ import lombok.Data;
  * @author dhb
  */
 @Data
+@Accessors(chain = true)
 public class ProfileDto {
 
-    private Long id;
+    private Integer id;
 
     private Integer gender;
 
@@ -20,7 +22,7 @@ public class ProfileDto {
 
     private String email;
 
-    private Long userId;
+    private Integer userId;
 
     private String nickName;
 

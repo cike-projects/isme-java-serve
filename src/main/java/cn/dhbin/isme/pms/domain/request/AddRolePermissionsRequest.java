@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class AddRolePermissionsRequest {
 
-    private Long id;
+    private Integer id;
 
-    private List<Long> permissionIds;
+    private List<Integer> permissionIds;
 }

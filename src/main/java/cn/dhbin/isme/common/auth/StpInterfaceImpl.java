@@ -14,12 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class StpInterfaceImpl implements StpInterface {
 
-    @Override
+    
     public List<String> getPermissionList(Object loginId, String loginType) {
         return null;
     }
 
-    @Override
     public List<String> getRoleList(Object loginId, String loginType) {
         String role = (String) StpUtil.getExtra(SaTokenConfigure.JWT_CURRENT_ROLE_KEY);
         return CollUtil.newArrayList(role);

@@ -20,7 +20,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     private final Cache<String, ICaptcha> captchaList = new TimedCache<>(60000);
 
-    @Override
+    
     public Pair<String, ICaptcha> create() {
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(80, 40, 4, 4);
         String key = UUID.randomUUID().toString(true);
@@ -28,7 +28,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         return Pair.of(key, captcha);
     }
 
-    @Override
+    
     public boolean verify(String key, String code) {
         ICaptcha captcha = captchaList.get(key);
         if (captcha == null) {

@@ -1,7 +1,7 @@
 package cn.dhbin.isme.common.request;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.Data;
 
 /**
@@ -27,11 +27,7 @@ public class PageRequest {
      * @param <T> 类型
      * @return Page
      */
-    public <T> IPage<T> toPage() {
-        Page<T> page = new Page<>();
-        page.setSize(pageSize);
-        page.setMaxLimit(500L);
-        page.setCurrent(pageNo);
-        return page;
+    public <T> Page<T> toPage() {
+        return PageHelper.startPage(pageNo, pageSize);
     }
 }

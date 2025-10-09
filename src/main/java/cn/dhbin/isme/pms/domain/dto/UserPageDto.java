@@ -3,14 +3,16 @@ package cn.dhbin.isme.pms.domain.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 用户分页数据
  */
 @Data
+@Accessors(chain = true)
 public class UserPageDto {
 
-    private Long id;
+    private Integer id;
 
     private String username;
 

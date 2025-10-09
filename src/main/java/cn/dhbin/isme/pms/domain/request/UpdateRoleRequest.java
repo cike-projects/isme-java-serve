@@ -15,7 +15,7 @@ public class UpdateRoleRequest {
 
     private Boolean enable;
 
-    private List<Long> permissionIds;
+    private List<Integer> permissionIds;
 
 
 }

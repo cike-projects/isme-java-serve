@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UpdateUserRequest {
 
-    private List<Long> roleIds;
+    private List<Integer> roleIds;
 
     private Boolean enable;
 

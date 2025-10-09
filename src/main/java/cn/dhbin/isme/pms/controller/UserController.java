@@ -7,7 +7,7 @@ import cn.dhbin.isme.common.auth.SaTokenConfigure;
 import cn.dhbin.isme.common.exception.BizException;
 import cn.dhbin.isme.common.preview.Preview;
 import cn.dhbin.isme.common.response.BizResponseCode;
-import cn.dhbin.isme.common.response.Page;
+import cn.dhbin.isme.common.response.PageList;
 import cn.dhbin.isme.common.response.R;
 import cn.dhbin.isme.pms.domain.dto.UserDetailDto;
 import cn.dhbin.isme.pms.domain.dto.UserPageDto;
@@ -19,8 +19,6 @@ import cn.dhbin.isme.pms.domain.request.UpdateUserRequest;
 import cn.dhbin.isme.pms.domain.request.UserPageRequest;
 import cn.dhbin.isme.pms.service.UserService;
 import cn.hutool.core.convert.NumberWithFormat;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@Tag(name = "用户")
 public class UserController {
 
     private final UserService userService;
@@ -54,7 +51,6 @@ public class UserController {
     @PostMapping
     @Roles({RoleType.SUPER_ADMIN})
     @Preview
-    @Operation(summary = "新增用户")
     public R<Void> create(@RequestBody @Validated RegisterUserRequest request) {
         userService.register(request);
         return R.ok();
@@ -67,10 +63,9 @@ public class UserController {
      * @return R
      */
     @GetMapping
-    @Operation(summary = "获取所有")
-    public R<Page<UserPageDto>> findAll(UserPageRequest request) {
-        Page<UserPageDto> ret = userService.queryPage(request);
-        return R.ok(ret);
+    public R<PageList<UserPageDto>> findAll(UserPageRequest request) {
+      PageList<UserPageDto> ret = userService.queryPage(request);
+      return R.ok(ret);
     }
 
 
@@ -82,8 +77,7 @@ public class UserController {
     @DeleteMapping("{id}")
     @Roles({RoleType.SUPER_ADMIN})
     @Preview
-    @Operation(summary = "根据id删除")
-    public R<Void> remove(@PathVariable Long id) {
+    public R<Void> remove(@PathVariable int id) {
         NumberWithFormat userIdFormat = (NumberWithFormat) StpUtil.getExtra(SaTokenConfigure.JWT_USER_ID_KEY);
         if (userIdFormat.longValue() == id) {
             throw new BizException(BizResponseCode.ERR_11006, "非法操作，不能删除自己！");
@@ -100,8 +94,7 @@ public class UserController {
      */
     @PatchMapping("{id}")
     @Preview
-    @Operation(summary = "根据id更新")
-    public R<Void> update(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
+    public R<Void> update(@PathVariable int id, @RequestBody UpdateUserRequest request) {
         userService.updateById(id, request);
         return R.ok();
     }
@@ -115,7 +108,6 @@ public class UserController {
      */
     @PatchMapping("/profile/{id}")
     @Preview
-    @Operation(summary = "更新资料")
     public R<Void> updateProfile(@PathVariable Long id, @RequestBody UpdateProfileRequest request) {
         NumberWithFormat userIdFormat = (NumberWithFormat) StpUtil.getExtra(SaTokenConfigure.JWT_USER_ID_KEY);
         if (userIdFormat.longValue() != id) {
@@ -133,12 +125,9 @@ public class UserController {
      * @return R
      */
     @GetMapping("/detail")
-    @Operation(summary = "用户信息")
     public R<UserDetailDto> detail() {
-        NumberWithFormat userId =
-            (NumberWithFormat) StpUtil.getExtra(SaTokenConfigure.JWT_USER_ID_KEY);
-        String roleCode = (String) StpUtil.getExtra(SaTokenConfigure.JWT_CURRENT_ROLE_KEY);
-        UserDetailDto detail = userService.detail(userId.longValue(), roleCode);
+        int userId = StpUtil.getLoginIdAsInt();
+        UserDetailDto detail = userService.detail(userId, "SUPER_ADMIN");
         return R.ok(detail);
     }
 
@@ -151,7 +140,6 @@ public class UserController {
      */
     @GetMapping("/{username}")
     @Roles({RoleType.SUPER_ADMIN})
-    @Operation(summary = "根据用户名获取")
     public R<Void> findByUsername(@PathVariable String username) {
         throw new BizException(BizResponseCode.ERR_11006, "接口未实现");
     }
@@ -163,7 +151,6 @@ public class UserController {
      * @return R
      */
     @GetMapping("/profile/{userId}")
-    @Operation(summary = "查询用户的profile")
     public R<Void> getUserProfile(@PathVariable Long userId) {
         throw new BizException(BizResponseCode.ERR_11006, "接口未实现");
     }
@@ -176,8 +163,7 @@ public class UserController {
      */
     @PostMapping("/roles/add/{userId}")
     @Preview
-    @Operation(summary = "添加角色")
-    public R<Object> addRoles(@PathVariable Long userId, @RequestBody @Validated AddUserRolesRequest request) {
+    public R<Object> addRoles(@PathVariable int userId, @RequestBody @Validated AddUserRolesRequest request) {
         userService.addRoles(userId, request);
         return R.ok();
     }
@@ -189,8 +175,7 @@ public class UserController {
      */
     @PatchMapping("password/reset/{userId}")
     @Roles({RoleType.SUPER_ADMIN})
-    @Operation(summary = "重置密码")
-    public R<Object> resetPassword(@PathVariable Long userId, @RequestBody @Validated UpdatePasswordRequest request) {
+    public R<Object> resetPassword(@PathVariable int userId, @RequestBody @Validated UpdatePasswordRequest request) {
         userService.resetPassword(userId, request);
         return R.ok();
     }

@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class AddUserRolesRequest {
 
-    private List<Long> roleIds;
+    private List<Integer> roleIds;
 
 }

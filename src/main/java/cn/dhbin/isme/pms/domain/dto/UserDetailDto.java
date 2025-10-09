@@ -3,6 +3,7 @@ package cn.dhbin.isme.pms.domain.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 用户详细信息
@@ -10,6 +11,7 @@ import lombok.Data;
  * @author dhb
  */
 @Data
+@Accessors(chain = true)
 public class UserDetailDto {
 
     private Long id;

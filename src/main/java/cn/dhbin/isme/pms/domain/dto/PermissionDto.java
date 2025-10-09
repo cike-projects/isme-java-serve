@@ -1,6 +1,7 @@
 package cn.dhbin.isme.pms.domain.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 权限
@@ -8,9 +9,10 @@ import lombok.Data;
  * @author dhb
  */
 @Data
+@Accessors(chain = true)
 public class PermissionDto {
 
-    private Long id;
+    private int id;
 
     private String name;
 
@@ -18,7 +20,7 @@ public class PermissionDto {
 
     private String type;
 
-    private Long parentId;
+    private Integer parentId;
 
     private String path;
 

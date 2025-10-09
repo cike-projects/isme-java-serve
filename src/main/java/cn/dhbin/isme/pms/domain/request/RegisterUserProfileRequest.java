@@ -1,6 +1,6 @@
 package cn.dhbin.isme.pms.domain.request;
 
-import cn.dhbin.mapstruct.helper.core.Convert;
+import cn.dhbin.isme.repository.sherry.entity.Profile;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * @author dhb
  */
 @Data
-public class RegisterUserProfileRequest implements Convert {
+public class RegisterUserProfileRequest {
 
     private String nickName;
 
@@ -22,4 +22,13 @@ public class RegisterUserProfileRequest implements Convert {
     private String email;
 
 
+  public Profile convert() {
+    Profile profile = new Profile();
+    profile.setNickname(nickName);
+    profile.setGender(gender);
+    profile.setAvatar(avatar);
+    profile.setAddress(address);
+    profile.setEmail(email);
+    return profile;
+  }
 }

@@ -1,6 +1,7 @@
 package cn.dhbin.isme.pms.domain.dto;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 角色Dto
@@ -8,9 +9,10 @@ import lombok.Data;
  * @author dhb
  */
 @Data
+@Accessors(chain = true)
 public class RoleDto {
 
-    private Long id;
+    private Integer id;
 
     private String code;
 
