@@ -2,7 +2,6 @@ package cn.dhbin.isme.pms.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dhbin.isme.common.auth.SaTokenConfigure;
-import cn.dhbin.isme.common.preview.Preview;
 import cn.dhbin.isme.common.response.R;
 import cn.dhbin.isme.pms.domain.dto.LoginTokenDto;
 import cn.dhbin.isme.pms.domain.request.ChangePasswordRequest;
@@ -70,7 +69,6 @@ public class AuthController {
      * @return R
      */
     @PostMapping("/register")
-    @Preview
     public R<Void> register(@RequestBody RegisterUserRequest request) {
         userService.register(request);
         return R.ok();
@@ -132,7 +130,6 @@ public class AuthController {
      * @return R
      */
     @PostMapping("/password")
-    @Preview
     public R<Object> changePassword(@RequestBody ChangePasswordRequest request) {
         userService.changePassword(request);
         return R.ok();

@@ -5,7 +5,6 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dhbin.isme.common.auth.SaTokenConfigure;
 import cn.dhbin.isme.common.exception.BizException;
-import cn.dhbin.isme.common.preview.PreviewProperties;
 import cn.dhbin.isme.common.response.BizResponseCode;
 import cn.dhbin.isme.common.response.PageList;
 import cn.dhbin.isme.pms.domain.dto.LoginTokenDto;
@@ -54,8 +53,6 @@ public class UserService {
 
   private final CaptchaService captchaService;
 
-  private final PreviewProperties previewProperties;
-
   @Autowired
   private UserRepository userRepository;
 
@@ -71,7 +68,7 @@ public class UserService {
       throw new BizException(BizResponseCode.ERR_10002);
     }
     // 预览环境下可快速登录，不用验证码
-    if (Boolean.TRUE.equals(request.getIsQuick()) && Boolean.TRUE.equals(previewProperties.getPreview())) {
+    if (Boolean.TRUE.equals(request.getIsQuick())) {
       return login(request, user);
     }
 //        if (StrUtil.isBlank(request.getCaptchaKey())

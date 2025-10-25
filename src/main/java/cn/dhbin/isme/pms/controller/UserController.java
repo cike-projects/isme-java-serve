@@ -1,11 +1,11 @@
 package cn.dhbin.isme.pms.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dhbin.isme.common.auth.RoleType;
 import cn.dhbin.isme.common.auth.Roles;
 import cn.dhbin.isme.common.auth.SaTokenConfigure;
 import cn.dhbin.isme.common.exception.BizException;
-import cn.dhbin.isme.common.preview.Preview;
 import cn.dhbin.isme.common.response.BizResponseCode;
 import cn.dhbin.isme.common.response.PageList;
 import cn.dhbin.isme.common.response.R;
@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@SaCheckLogin
 public class UserController {
 
     private final UserService userService;
@@ -50,7 +51,6 @@ public class UserController {
      */
     @PostMapping
     @Roles({RoleType.SUPER_ADMIN})
-    @Preview
     public R<Void> create(@RequestBody @Validated RegisterUserRequest request) {
         userService.register(request);
         return R.ok();
@@ -76,7 +76,6 @@ public class UserController {
      */
     @DeleteMapping("{id}")
     @Roles({RoleType.SUPER_ADMIN})
-    @Preview
     public R<Void> remove(@PathVariable int id) {
         NumberWithFormat userIdFormat = (NumberWithFormat) StpUtil.getExtra(SaTokenConfigure.JWT_USER_ID_KEY);
         if (userIdFormat.longValue() == id) {
@@ -93,7 +92,6 @@ public class UserController {
      * @return R
      */
     @PatchMapping("{id}")
-    @Preview
     public R<Void> update(@PathVariable int id, @RequestBody UpdateUserRequest request) {
         userService.updateById(id, request);
         return R.ok();
@@ -107,7 +105,6 @@ public class UserController {
      * @return R
      */
     @PatchMapping("/profile/{id}")
-    @Preview
     public R<Void> updateProfile(@PathVariable Long id, @RequestBody UpdateProfileRequest request) {
         NumberWithFormat userIdFormat = (NumberWithFormat) StpUtil.getExtra(SaTokenConfigure.JWT_USER_ID_KEY);
         if (userIdFormat.longValue() != id) {
@@ -162,7 +159,6 @@ public class UserController {
      * @return R
      */
     @PostMapping("/roles/add/{userId}")
-    @Preview
     public R<Object> addRoles(@PathVariable int userId, @RequestBody @Validated AddUserRolesRequest request) {
         userService.addRoles(userId, request);
         return R.ok();

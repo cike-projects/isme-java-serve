@@ -1,6 +1,5 @@
 package cn.dhbin.isme.pms.controller;
 
-import cn.dhbin.isme.common.preview.Preview;
 import cn.dhbin.isme.common.response.R;
 import cn.dhbin.isme.pms.domain.dto.PermissionDto;
 import cn.dhbin.isme.pms.domain.request.CreatePermissionRequest;
@@ -39,7 +38,6 @@ public class PermissionController {
    * @return R
    */
   @PostMapping
-  @Preview
   public R<Void> create(@RequestBody @Validated CreatePermissionRequest request) {
     permissionService.create(request);
     return R.ok();
@@ -52,7 +50,6 @@ public class PermissionController {
    * @return R
    */
   @PostMapping("/batch")
-  @Preview
   public R<Void> batchCreate(@RequestBody @Validated List<CreatePermissionRequest> request) {
     permissionService.createBatch(request);
     return R.ok();

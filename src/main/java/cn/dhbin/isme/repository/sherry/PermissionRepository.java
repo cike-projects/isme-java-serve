@@ -7,10 +7,12 @@ import cn.dhbin.isme.repository.sherry.mapper.PermissionDynamicSqlSupport;
 import cn.dhbin.isme.repository.sherry.mapper.PermissionMapper;
 import cn.dhbin.isme.repository.sherry.selfmapper.PermissionSelfMapper;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class PermissionRepository {
 
   @Autowired
